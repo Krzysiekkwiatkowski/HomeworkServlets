@@ -53,7 +53,6 @@ public class Sess07 extends HttpServlet {
             point = (boolean) session.getAttribute("point");
         }
         String counterCheck = String.valueOf(session.getAttribute("counter"));
-        System.out.println(counterCheck);
         if(counterCheck.equals("null")){
             counter = 0;
         } else {
