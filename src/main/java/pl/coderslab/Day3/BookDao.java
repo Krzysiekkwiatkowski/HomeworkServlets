@@ -12,7 +12,7 @@ public class BookDao {
     private static String GET_ALL_BOOKS = "SELECT * FROM books";
     private static String LOAD_BOOK = "SELECT * FROM books WHERE id= ?";
     private static String EDIT_BOOK = "UPDATE books SET title = ? , author = ?, isbn = ? WHERE id = ?";
-    private static String FIND_BOOK = "SELECT * FROM books WHERE title LIKE \"%?%\"";
+    private static String FIND_BOOK = "SELECT * FROM books WHERE title LIKE ?";
 
     public static Book save(Book book){
         try {
@@ -89,6 +89,28 @@ public class BookDao {
                 book.setIsbn(resultSet.getString("isbn"));
             }
             return book;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Book> find(String titlePart){
+        List<Book> books = new ArrayList<>();
+        try {
+            Connection connection = DBUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BOOK);
+            preparedStatement.setString(1, titlePart);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Book book = new Book();
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthor(resultSet.getString("author"));
+                book.setIsbn(resultSet.getString("isbn"));
+                book.setId(resultSet.getInt("id"));
+                books.add(book);
+            }
+            return books;
         } catch (SQLException e){
             e.printStackTrace();
         }

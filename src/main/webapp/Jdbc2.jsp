@@ -32,7 +32,7 @@
 </table>
 </br>
 <form action="/search-book" method="post">
-    Podaj tytuł lub jego część: <input type="text" name="title">
+    Podaj tytuł lub jego część: <input type="text" name="titlePart">
     <input type="submit" value="Szukaj">
 </form>
 </body>

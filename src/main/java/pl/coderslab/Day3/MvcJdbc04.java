@@ -27,7 +27,6 @@ public class MvcJdbc04 extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         int id = Integer.parseInt(request.getParameter("id"));
         Book book = BookDao.load(id);
-        System.out.println(book.getId() + book.getTitle() + book.getAuthor() + book.getIsbn());
         request.setAttribute("book", book);
         getServletContext().getRequestDispatcher("/Jdbc3.jsp")
                 .forward(request, response);
