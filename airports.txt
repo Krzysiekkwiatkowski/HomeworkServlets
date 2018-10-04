@@ -1,0 +1,4 @@
+Fryderyka Chopina,12458,2017-06-01T08:30,
+Munchen,18963,2017-06-01T08:30,
+Londyn Luton,17854,2017-06-01T08:30,
+Barcelona,85632,2017-06-01T08:30
