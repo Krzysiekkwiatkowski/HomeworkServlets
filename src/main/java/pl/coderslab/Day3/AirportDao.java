@@ -13,10 +13,10 @@ public class AirportDao {
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
-                StringTokenizer stringTokenizer = new StringTokenizer(scanner.nextLine(), ",");
+                StringTokenizer stringTokenizer = new StringTokenizer(scanner.nextLine(), ";");
                 String name = stringTokenizer.nextToken();
-                int code = Integer.parseInt(stringTokenizer.nextToken());
-                LocalDateTime timezone = LocalDateTime.parse(stringTokenizer.nextToken());
+                String code = stringTokenizer.nextToken();
+                String timezone = stringTokenizer.nextToken();
                 Airport airport = new Airport(name, code, timezone);
                 airports.add(airport);
             }

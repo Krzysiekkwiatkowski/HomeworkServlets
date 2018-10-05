@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 public class Airport {
 
     private String name;
-    private int code;
-    private LocalDateTime timezone;
+    private String code;
+    private String timezone;
 
-    public Airport(String name, int code, LocalDateTime timezone) {
+    public Airport(String name, String code, String timezone) {
         this.name = name;
         this.code = code;
         this.timezone = timezone;
@@ -22,19 +22,19 @@ public class Airport {
         this.name = name;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public LocalDateTime getTimezone() {
+    public String getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(LocalDateTime timezone) {
+    public void setTimezone(String timezone) {
         this.timezone = timezone;
     }
 }
