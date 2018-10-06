@@ -16,22 +16,46 @@ import java.util.regex.Pattern;
 @WebServlet("/HM5")
 public class HM5 extends HttpServlet {
 
-    private static final String DATE_FORMAT = "yyyy-mm-ddThh:mm";
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
         String departure = request.getParameter("departure");
-        StringTokenizer stringTokenizer = new StringTokenizer(departure, "-");
+        StringTokenizer stringTokenizer = new StringTokenizer(departure, "#");
         String departureAirport = stringTokenizer.nextToken();
+        String departureCode = stringTokenizer.nextToken();
         String departureTimezone = stringTokenizer.nextToken();
         String arrival = request.getParameter("arrival");
-        stringTokenizer = new StringTokenizer(arrival, "-");
+        stringTokenizer = new StringTokenizer(arrival, "#");
         String arrivalAirport = stringTokenizer.nextToken();
+        String arrivalCode = stringTokenizer.nextToken();
         String arrivalTimezone = stringTokenizer.nextToken();
         String date = request.getParameter("date");
         int length = Integer.parseInt(request.getParameter("length"));
         double price = Double.parseDouble(request.getParameter("price"));
         if(!departureAirport.equals(arrivalAirport) && check(date) && price > 0) {
-
+            LocalDateTime departureTime = LocalDateTime.parse(date);
+            ZoneId departureId = ZoneId.of(departureTimezone);
+            ZonedDateTime departureZonedTime = departureTime.atZone(departureId);
+            ZoneId arrivalId = ZoneId.of(arrivalTimezone);
+            ZonedDateTime arrivalZonedTime = departureZonedTime.withZoneSameInstant(arrivalId);
+            ZonedDateTime arrivalTime =  arrivalZonedTime.plusHours(length);
+            LocalDateTime result = arrivalTime.toLocalDateTime();
+            LocalTime localTime = result.toLocalTime();
+            Time time = Time.valueOf(localTime);
+            Flight flight = new Flight(departureAirport + " " + date + " " + departureCode, arrivalAirport + " " + result + " " + arrivalCode, time, price);
+            request.setAttribute("length", length);
+            request.setAttribute("flight", flight);
+            getServletContext().getRequestDispatcher("/HM5Flight.jsp")
+                    .forward(request, response);
+        } else {
+            String wrong = "Niepoprawne dane";
+            AirportDao airportDao = new AirportDao();
+            List<Airport> airports = airportDao.getList();
+            request.setAttribute("airports", airports);
+            request.setAttribute("wrong", wrong);
+            getServletContext().getRequestDispatcher("/HM5.jsp")
+                    .forward(request, response);
         }
     }
 
