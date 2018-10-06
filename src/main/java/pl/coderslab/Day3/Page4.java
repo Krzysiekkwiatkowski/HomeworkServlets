@@ -31,7 +31,7 @@ public class Page4 extends HttpServlet {
             }
             response.getWriter().append("Witaj na stronie 4</br>");
             response.getWriter().append("<a href=\"http://localhost:8080/history?del=true\"> Usuń historię </a></br>");
-            response.getWriter().append("Odwiedzałeś:</br>");
+            response.getWriter().append("Odwiedzałeś: </br>");
             for (Integer number : pages) {
                 response.getWriter().append("Strona " + number + "</br>");
             }
